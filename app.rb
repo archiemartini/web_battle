@@ -1,5 +1,8 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
+require './lib/player.rb'
+#here we've required our new tested player.rb, 
+#v simple name initialization situation :p
 
 class Battle < Sinatra::Base
   configure :development do
@@ -13,20 +16,25 @@ get '/' do
 end
 
 post '/names' do
-  session[:player_1_name] = params[:player_1_name]
-  session[:player_2_name] = params[:player_2_name]
+  $player_1 = Player.new(params[:player_1_name])
+  $player_2 = Player.new(params[:player_2_name])
   redirect '/play'
 end
+#now we've replaced our session memory stores and replaced them with instantiations
+#of the new Player class, taking the params of previous as arguments
+
 
 get '/play' do
-  @player_1_name = session[:player_1_name]
-  @player_2_name = session[:player_2_name]
+  @player_1_name = $player_1.name
+  @player_2_name = $player_2.name
   erb :play
 end
+#these global variables go on to define our instance variables
+#required by the /play erb
 
 get '/attack' do
-  @player_1_name = session[:player_1_name]
-  @player_2_name = session[:player_2_name]
+  @player_1_name = $player_1.name
+  @player_2_name = $player_2.name
   erb :attack
 end
 
