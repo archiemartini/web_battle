@@ -1,9 +1,6 @@
 feature 'Hit points' do
   scenario 'expecting player 2\'s hit point count after name submission' do
-    visit('/')
-    fill_in :player_1_name, with: 'Dusty'
-    fill_in :player_2_name, with: 'Haribo'
-    click_button 'Submit'
+    sign_in_and_play
     expect(page).to have_content 'Haribo: 50hp'
   end
 end
