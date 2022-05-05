@@ -6,20 +6,29 @@ class Battle < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  # our routes would go here
+enable :sessions
+#^^so we've enabled sessions, a memory-state store, 
+#if activated you have one store per user-session
 get '/' do
-  # 'Testing infrastructure working!'
   erb :index
 end
 
 post '/names' do
-  @player_1_name = params[:player_1_name]
-  @player_2_name = params[:player_2_name]
-  p @player_1_name
-  p @player_2_name
+  session[:player_1_name] = params[:player_1_name]
+  session[:player_2_name] = params[:player_2_name]
+  p session[:player_1_name]
+  p session[:player_2_name]
+  redirect '/play'
+end
+#redirects prevent resubmissions of a post request, think about browsers asking you if you're sure you
+#you want to 'confirm resubmission' POST/REDIRECT/GET
+get '/play' do
+  @player_1_name = session[:player_1_name]
+  @player_2_name = session[:player_2_name]
   erb :play
 end
+#we lost our instance variables, storing them as sessions. this redirect allows
+#us to redefine them, extracting from our previously defined session variables/hash-values
 
-  # start the server if this file is executed directly (so not change the line below)
   run! if app_file == $0
 end
