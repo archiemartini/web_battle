@@ -9,8 +9,12 @@ class Player
   @hitpoints = DEFAULT_HITPOINTS
   end
 
-  def attacked 
+  def received_damage 
     @hitpoints -= 10
+  end
+
+  def attack(name)
+    name.received_damage
   end
 
 end
