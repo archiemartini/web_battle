@@ -25,16 +25,17 @@ end
 
 
 get '/play' do
-  @player_1_name = $player_1.name
-  @player_2_name = $player_2.name
+  @player_1 = $player_1
+  @player_2 = $player_2
   erb :play
 end
 #these global variables go on to define our instance variables
 #required by the /play erb
 
 get '/attack' do
-  @player_1_name = $player_1.name
-  @player_2_name = $player_2.name
+  @player_1 = $player_1
+  @player_2 = $player_2
+  @player_2.attacked
   erb :attack
 end
 
