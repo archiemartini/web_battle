@@ -13,8 +13,5 @@ class Player
     @hitpoints -= 10
   end
 
-  def attack(name)
-    name.received_damage
-  end
-
+  
 end
